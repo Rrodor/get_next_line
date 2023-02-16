@@ -1,41 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rrodor <rrodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/13 18:35:55 by rrodor            #+#    #+#             */
-/*   Updated: 2023/02/16 22:52:38 by rrodor           ###   ########.fr       */
+/*   Created: 2023/02/16 16:38:42 by rrodor            #+#    #+#             */
+/*   Updated: 2023/02/16 16:42:30 by rrodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-
-char	*get_next_line(int fd)
+char	*ft_strcat(char *str, char *buf)
 {
-	char	*buf;
-	char	*line;
-
-	buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	line = ft_cleanbuf(buf, fd);
-	return (line);
-}
-
-int	main(void)
-{
-	int	fd;
-	char	*str;
 	int	i;
+	int	j;
 
 	i = 0;
-	fd = open ("toknowyou.txt",	O_RDONLY);
-	while (i < 5)
-	{
-		str = get_next_line(fd);
-		printf("%s\n", str);
+	j = 0;
+	while (str[i] && i < 1000)
 		i++;
+	while (buf[j] && i + j < 1000)
+	{
+		str[i + j] = buf[j];
+		j++;
 	}
-	close (fd);
+	return (str);
+}
+
+#include <stdio.h>
+int	main()
+{
+	char	str[100] = "salut";
+
+	printf("%s", ft_strcat(str, " a tous"));
 	return (0);
 }

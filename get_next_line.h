@@ -6,7 +6,7 @@
 /*   By: rrodor <rrodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 19:58:12 by rrodor            #+#    #+#             */
-/*   Updated: 2023/02/13 20:12:41 by rrodor           ###   ########.fr       */
+/*   Updated: 2023/02/16 23:25:45 by rrodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
-char *get_next_line(int fd);
-size_t	ft_linesize(int fd);
+#define BUFFER_SIZE 1000
+
+char	*get_next_line(int fd);
+char	*ft_cleanbuf(char *buf, int fd);
+char	*ft_strcat(char *str, char *buf);
+char	*ft_strjoin(char *s1, char *s2);
+size_t	ft_strlen(char *s);
 
 #endif
