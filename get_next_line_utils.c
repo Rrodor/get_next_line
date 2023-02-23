@@ -5,127 +5,88 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rrodor <rrodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/13 20:00:30 by rrodor            #+#    #+#             */
-/*   Updated: 2023/02/16 23:27:42 by rrodor           ###   ########.fr       */
+/*   Created: 2023/02/23 19:01:12 by rrodor            #+#    #+#             */
+/*   Updated: 2023/02/23 23:52:09 by rrodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_cleanbuf(char *buf, int fd)
-{
-	int			i;
-	int			j;
-	int			x;
-	static char	str[BUFFER_SIZE * 10];
-	char	*line;
-	char	ref[BUFFER_SIZE];
-	//char	test[BUFFER_SIZE];
-	i = 0;
-	j = 0;
-	x = 0;
-	while (str[i])
-	{
-		if (str[i] == '\n')
-			j = 1;
-		i++;
-	}
-	if (j == 0)
-		read(fd, buf, BUFFER_SIZE);
-	i = 0;
-	j = 0;
-	line = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	ft_strcat(str, buf);
-	//printf("buf%sbuf\n\n", str);
-	while (str[i] != '\n' && str[i] && i < BUFFER_SIZE * 10)
-	{
-		line[i] = str[i];
-		i++;
-	}
-	if (str[i] == '\n')
-		x = 1;
-	line[i] = 0;
-	i++;
-	if (x == 1)
-	{
-		while (str[i] && i < BUFFER_SIZE)
-		{
-			ref[j] = str[i];
-			j++;
-			i++;
-		}
-	}
-	ref[j] = 0;
-	j = 0;
-	while (ref[j])
-	{
-		str[j] = ref[j];
-		j++;
-	}
-	str[j] = 0;
-	//printf("A%sA\n", str);
-	if (x == 0)
-	{
-		line = ft_strjoin(line, ft_cleanbuf(buf, fd));
-		//printf("AAA%sAAA", line);
-	}
-	return (line);
-}
-
-char	*ft_strcat(char *str, char *buf)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (str[i])
-		i++;
-	while (buf[j])
-	{
-		str[i + j] = buf[j];
-		j++;
-	}
-	str[i + j] = 0;
-	return (str);
-}
-
-size_t	ft_strlen(char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
-	size_t	ls1;
-	size_t	ls2;
 
-	if (!s1 || !s2)
-		return (0);
-	ls1 = ft_strlen((char *)s1);
-	ls2 = ft_strlen((char *)s2);
-	str = malloc((ls1 + ls2 + 1)  * sizeof(char));
+	if (!s1 && !s2)
+		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (s1);
+	str = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	str[0] = 0;
 	if (!str)
 		return (0);
 	ft_strcat(str, s1);
 	ft_strcat(str, s2);
+	free(s1);
 	return (str);
 }
 
-/*
-int	main()
+char	*ft_strdup(char	*str)
 {
-	int	fd;
+	char	*ret;
 
-	fd = open("test.txt", O_RDONLY);
-	printf("%ld", ft_linesize(fd));
-	close (fd);
-	return (0);
-}*/
+	ret = malloc ((ft_strlen(str) + 1) * sizeof(char));
+	ft_strcat(ret, str);
+	return (ret);
+}
 
+size_t	ft_strlen(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+		i++;
+	return (i);
+}
+
+char	*ft_strcat(char *dst, const char *src)
+{
+	size_t	i;
+	size_t	ld;
+
+	i = 0;
+	ld = 0;
+	if (!dst && !src)
+		return (0);
+	if (dst[0])
+		ld = ft_strlen(dst);
+	while (src[i])
+	{
+		dst[ld + i] = src[i];
+		i++;
+	}
+	dst[ld + i] = 0;
+	return (dst);
+}
+
+int	ft_strchr(char *str, char c)
+{
+	int	i;
+	int	x;
+
+	i = 0;
+	x = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == c)
+			x = 1;
+		i++;
+	}
+	return (x);
+}
